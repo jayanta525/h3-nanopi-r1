@@ -641,6 +641,11 @@
 				function = "lcd0";
 			};
 
+			i2c3_pins_a: i2c3@0 {
+				allwinner,pins = "PB5", "PB6";
+				allwinner,function = "i2c3";
+			};
+
 			mmc0_pins_a: mmc0@0 {
 				pins = "PF0", "PF1", "PF2",
 						 "PF3", "PF4", "PF5";

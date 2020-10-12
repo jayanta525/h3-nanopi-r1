@@ -110,13 +110,13 @@
 #define PRCM_PLL_CTRL_LDO_OUT_MASK \
 	__PRCM_PLL_CTRL_LDO_OUT(0x7)
 /* When using the low voltage 20 mV steps, and high voltage 30 mV steps */
-#define PRCM_PLL_CTRL_LDO_OUT_L(n) \
-	__PRCM_PLL_CTRL_VDD_LDO_OUT((((n) - 1000) / 20) & 0x7)
 #define PRCM_PLL_CTRL_LDO_OUT_H(n) \
+	__PRCM_PLL_CTRL_VDD_LDO_OUT((((n) - 1000) / 20) & 0x7)
+#define PRCM_PLL_CTRL_LDO_OUT_L(n) \
 	__PRCM_PLL_CTRL_VDD_LDO_OUT((((n) - 1160) / 30) & 0x7)
-#define PRCM_PLL_CTRL_LDO_OUT_LV(n) \
-	__PRCM_PLL_CTRL_VDD_LDO_OUT((((n) & 0x7) * 20) + 1000)
 #define PRCM_PLL_CTRL_LDO_OUT_HV(n) \
+	__PRCM_PLL_CTRL_VDD_LDO_OUT((((n) & 0x7) * 20) + 1000)
+#define PRCM_PLL_CTRL_LDO_OUT_LV(n) \
 	__PRCM_PLL_CTRL_VDD_LDO_OUT((((n) & 0x7) * 30) + 1160)
 #define PRCM_PLL_CTRL_LDO_KEY (0xa7 << 24)
 #define PRCM_PLL_CTRL_LDO_KEY_MASK (0xff << 24)

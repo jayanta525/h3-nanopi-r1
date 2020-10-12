@@ -455,6 +455,7 @@ dtb-$(CONFIG_MACH_SUN6I) += \
 	sun6i-a31-m9.dtb \
 	sun6i-a31-mele-a1000g-quad.dtb \
 	sun6i-a31-mixtile-loftq.dtb \
+	sun6i-a31-pangolin.dtb \
 	sun6i-a31s-colorfly-e708-q1.dtb \
 	sun6i-a31s-cs908.dtb \
 	sun6i-a31s-inet-q972.dtb \
@@ -538,7 +539,8 @@ dtb-$(CONFIG_MACH_SUN8I_H3) += \
 	sun8i-h3-orangepi-plus.dtb \
 	sun8i-h3-orangepi-plus2e.dtb \
 	sun8i-h3-orangepi-zero-plus2.dtb \
-	sun8i-h3-rervision-dvk.dtb
+	sun8i-h3-rervision-dvk.dtb \
+	sun8i-h3-zeropi.dtb
 dtb-$(CONFIG_MACH_SUN8I_R40) += \
 	sun8i-r40-bananapi-m2-ultra.dtb \
 	sun8i-v40-bananapi-m2-berry.dtb

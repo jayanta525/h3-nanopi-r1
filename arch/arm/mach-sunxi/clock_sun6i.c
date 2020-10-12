@@ -25,13 +25,26 @@ void clock_init_safe(void)
 	struct sunxi_prcm_reg * const prcm =
 		(struct sunxi_prcm_reg *)SUNXI_PRCM_BASE;
 
-	/* Set PLL ldo voltage without this PLL6 does not work properly */
+	/* Set PLL ldo voltage without this PLL6 does not work properly.
+	 *
+	 * As the A31 manual states, that "before enable PLL, PLLVDD
+	 * LDO should be set to 1.37v", we need to configure this to 2.5v
+	 * in the "PLL Input Power Select" (0 << 15) and (7 << 16).
+	 */
 	clrsetbits_le32(&prcm->pll_ctrl1, PRCM_PLL_CTRL_LDO_KEY_MASK,
 			PRCM_PLL_CTRL_LDO_KEY);
 	clrsetbits_le32(&prcm->pll_ctrl1, ~PRCM_PLL_CTRL_LDO_KEY_MASK,
 		PRCM_PLL_CTRL_LDO_DIGITAL_EN | PRCM_PLL_CTRL_LDO_ANALOG_EN |
-		PRCM_PLL_CTRL_EXT_OSC_EN | PRCM_PLL_CTRL_LDO_OUT_L(1140));
+		PRCM_PLL_CTRL_EXT_OSC_EN | PRCM_PLL_CTRL_LDO_OUT_L(1370));
 	clrbits_le32(&prcm->pll_ctrl1, PRCM_PLL_CTRL_LDO_KEY_MASK);
+
+	/* Give the PLL LDO voltage setting some time to take hold.
+	 * Notes:
+	 *   1) We need to use sdelay() as the timers aren't set up yet.
+	 *   2) The 100k iterations come from Boot1, which spin's for 100k
+	 *      iterations through a loop.
+	 */
+	sdelay(100000);
 #endif
 
 #if defined(CONFIG_MACH_SUN8I_R40) || defined(CONFIG_MACH_SUN50I)
@@ -112,11 +125,12 @@ void clock_set_pll1(unsigned int clk)
 	struct sunxi_ccm_reg * const ccm =
 		(struct sunxi_ccm_reg *)SUNXI_CCM_BASE;
 	const int p = 0;
-	int k = 1;
-	int m = 1;
+	int k = 2;
+	int m = 2;
 
 	if (clk > 1152000000) {
-		k = 2;
+		k = 4;
+		m = 2;
 	} else if (clk > 768000000) {
 		k = 4;
 		m = 2;
